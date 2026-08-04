@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const isGithubPages = process.env.GITHUB_PAGES === "true";
+const basePath = isGithubPages ? "/muva-legal" : "";
 const socialImage = isGithubPages
   ? "https://ridagonz.github.io/muva-legal/og.png"
   : "/og.png";
@@ -20,8 +21,8 @@ export const metadata: Metadata = {
       "MUVA Legal",
     ],
     icons: {
-      icon: "/images/muva-logo.png",
-      shortcut: "/images/muva-logo.png",
+      icon: `${basePath}/images/muva-logo.png`,
+      shortcut: `${basePath}/images/muva-logo.png`,
     },
     openGraph: {
       title: "MUVA Legal | Estrategia penal con criterio",
