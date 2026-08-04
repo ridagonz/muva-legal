@@ -1,1 +1,49 @@
-m«ëˆ§½©buªàºg§µªiþV²¢ëm³,j›jÇºà7an{¦Š)ßŠW¨¢ë_ŠW›n·š‘ºÞjG§r‡^v‹­¦ën¦)í¢X§zÊ•éà¶î˜7]yÊy×œ¡×¢ž›­†¥¥Ø¬¦V²¶¬™ë,j¢Šzn¶)éº×â•ç^}«¥µú+²×bžŠ.¶›­¢ëiº×â•ç^}«¥µú+²×hº
+import type { Metadata } from "next";
+import "./globals.css";
+
+const isGithubPages = process.env.GITHUB_PAGES === "true";
+const socialImage = isGithubPages
+  ? "https://ridagonz.github.io/muva-legal/og.png"
+  : "/og.png";
+
+export const metadata: Metadata = {
+    title: {
+      default: "MUVA Legal | Abogados penalistas",
+      template: "%s | MUVA Legal",
+    },
+    description:
+      "Defensa penal estratÃ©gica, representaciÃ³n de vÃ­ctimas y prevenciÃ³n jurÃ­dica con atenciÃ³n directa y absoluta reserva.",
+    keywords: [
+      "abogado penalista BogotÃ¡",
+      "defensa penal Colombia",
+      "JosÃ© Luis Moreno Caballero",
+      "MUVA Legal",
+    ],
+    icons: {
+      icon: "/images/muva-logo.png",
+      shortcut: "/images/muva-logo.png",
+    },
+    openGraph: {
+      title: "MUVA Legal | Estrategia penal con criterio",
+      description:
+        "Defensa, representaciÃ³n de vÃ­ctimas y prevenciÃ³n jurÃ­dica con atenciÃ³n directa y absoluta reserva.",
+      type: "website",
+      locale: "es_CO",
+      siteName: "MUVA Legal",
+      images: [{ url: socialImage, width: 1200, height: 630, alt: "MUVA Legal - Estrategia penal con criterio" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "MUVA Legal | Estrategia penal con criterio",
+      description: "Defensa penal estratÃ©gica con rigor jurÃ­dico y criterio humano.",
+      images: [socialImage],
+    },
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="es">
+      <body>{children}</body>
+    </html>
+  );
+}

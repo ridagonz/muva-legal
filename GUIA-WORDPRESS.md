@@ -1,1 +1,101 @@
-m´ÎàßΩ©bu™‡∫gß¥ecëÙDI)ùR∆†y∂¨{ÆvÁ∫h¢ù¯•zä.µ¯•y∂Îy©≠Ê§zw(uÁh∫⁄n∂Íbû⁄%äw¨°˘^ûaûÈÉu◊ú°◊ùy z)È∫ÿazZ]ä ek+aä…û≤∆†z(ß¶Îbûõ≠~)^uÁ⁄∫[_¢ª-v)Ë¢Îi∫⁄.∂õ≠~)^uÁ⁄∫[_¢ª-vã≠
+# Gu√≠a de implementaci√≥n en WordPress - MUVA Legal
+
+Esta propuesta est√° lista para tomarse como referencia visual y de contenido al construir el sitio definitivo en WordPress.
+
+## Estructura recomendada
+
+### Inicio
+
+Una p√°gina larga y din√°mica con estas secciones:
+
+1. Presentaci√≥n principal y bot√≥n **Agendar una consulta**.
+2. Presentaci√≥n de MUVA Legal.
+3. Perfil y credenciales de Jos√© Luis Moreno Caballero.
+4. √Åreas de pr√°ctica en Derecho Penal.
+5. M√©todo de atenci√≥n.
+6. Experiencia y pol√≠tica de confidencialidad.
+7. √öltimos art√≠culos.
+8. Redes sociales.
+9. Formulario y datos de contacto.
+
+### P√°ginas y plantillas
+
+- **Inicio:** portada institucional.
+- **La firma:** historia, prop√≥sito y valores.
+- **Jos√© Luis Moreno Caballero:** perfil profesional y formaci√≥n.
+- **√Åreas de pr√°ctica:** p√°gina general y una p√°gina por cada servicio prioritario.
+- **Blog:** archivo de art√≠culos con categor√≠as.
+- **Art√≠culo:** plantilla individual con autor, fecha, tiempo de lectura y llamado a consulta.
+- **Contacto:** formulario, tel√©fono, correo y ubicaci√≥n.
+- **Pol√≠tica de privacidad:** tratamiento de la informaci√≥n enviada por el formulario.
+
+En WordPress conviene crear estas secciones con bloques reutilizables. As√≠ el equipo puede actualizar textos y art√≠culos sin alterar el dise√±o.
+
+## L√≠nea visual
+
+- Azul profundo: `#242A3D`
+- Azul de √©nfasis: `#4162EE`
+- Azul claro: `#5CA3F4`
+- Fondo marfil: `#F6F4EF`
+- Texto principal: `#18253A`
+
+El estilo combina t√≠tulos editoriales, espacios amplios y geometr√≠as triangulares tomadas del portafolio original. Los movimientos deben ser discretos: aparici√≥n al hacer scroll, desplazamiento suave y parallax solo en elementos decorativos.
+
+## Blog y posicionamiento en buscadores
+
+Recomendaci√≥n principal: instalar **Rank Math SEO**. Su asistente es claro, permite controlar t√≠tulos y descripciones, genera el mapa del sitio y facilita los datos estructurados para art√≠culos y servicios.
+
+**Yoast SEO** es una alternativa igualmente v√°lida. Debe instalarse solo uno de los dos para evitar duplicaciones.
+
+Estructura inicial de contenidos:
+
+- Derecho Penal.
+- Gu√≠as para personas investigadas.
+- Derechos de las v√≠ctimas.
+- Prevenci√≥n penal para empresas.
+- An√°lisis de actualidad jur√≠dica.
+- Opini√≥n y academia.
+
+Cada art√≠culo debe responder una pregunta concreta, incluir autor y fecha de revisi√≥n, explicar el tema en lenguaje claro y terminar con una invitaci√≥n prudente a solicitar orientaci√≥n profesional.
+
+## Formulario y Google Forms
+
+Campos definitivos:
+
+- Nombre completo.
+- Correo electr√≥nico.
+- Observaci√≥n o descripci√≥n breve.
+- Verificaci√≥n de seguridad.
+
+Para llevar las respuestas a Google Forms:
+
+1. Crear el formulario definitivo en la cuenta de MUVA Legal.
+2. A√±adir los tres campos anteriores.
+3. Activar la notificaci√≥n de nuevas respuestas.
+4. Copiar la direcci√≥n del formulario y los identificadores de cada campo.
+5. Reemplazar los valores mostrados en `.env.example`.
+
+En WordPress, la misma integraci√≥n puede insertarse mediante un bloque HTML personalizado o mediante el enlace de inserci√≥n que entrega Google Forms. Si se desea conservar exactamente el dise√±o de esta propuesta, conviene enviar los campos visuales al formulario de Google en segundo plano.
+
+## Complementos recomendados
+
+Instalar √∫nicamente los necesarios:
+
+- **Rank Math SEO:** posicionamiento y vista previa en buscadores.
+- **WPForms Lite** o **Fluent Forms:** solo si se prefiere administrar el formulario dentro de WordPress.
+- **Simple Google reCAPTCHA:** protecci√≥n adicional contra mensajes no deseados.
+- **ShortPixel** o **Imagify:** reducci√≥n del peso de las im√°genes.
+- **WP Rocket** o **LiteSpeed Cache:** usar el que corresponda al alojamiento, no ambos.
+- **Wordfence:** seguridad y alertas de acceso.
+- **Redirection:** control de enlaces antiguos al migrar el sitio.
+
+## Antes de publicar
+
+- Confirmar tel√©fono, correo y direcci√≥n actuales.
+- Entregar el enlace definitivo de Google Forms.
+- Sustituir o aprobar la fotograf√≠a del socio director.
+- Aprobar por escrito cualquier caso, cliente, logo o testimonio que vaya a mostrarse.
+- A√±adir aviso de privacidad y pol√≠tica de tratamiento de datos.
+- Conectar Search Console y Analytics despu√©s del lanzamiento.
+
+No se incluyeron testimonios ni resultados identificables porque los archivos de referencia no conten√≠an autorizaciones para publicarlos.

@@ -1,2 +1,95 @@
-m´ÎàßΩ©bu™‡∫gßµ™i˝ &¶âﬁû€?J+^
-ËôÎl≈KÅÊ⁄±Ó∏ÿ[ûÈ¢äw‚ïÍ(∫◊‚ïÊ€≠Ê§n∑öëÈ‹°◊ù¢Îi∫€©ä{hñ)ﬁ≤áÂzx-Ü{¶◊^rá^uÁ(uËß¶ÎaÖÈiv+)ï¨≠Ü+&zÀÅË¢ûõ≠äznµ¯•y◊üjÈm~äÏµÿß¢ã≠¶Îh∫⁄nµ¯•y◊üjÈm~äÏµ⁄.
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+const nav = [
+  { label: "La firma", href: "/#firma" },
+  { label: "Jos√© Luis Moreno", href: "/#director" },
+  { label: "√Åreas", href: "/#areas" },
+  { label: "Experiencia", href: "/#experiencia" },
+  { label: "Blog", href: "/blog" },
+];
+
+export function SiteHeader() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
+      <div className="container header-inner">
+        <Link className="brand" href="/" aria-label="MUVA Legal, inicio">
+          <Image src="/images/muva-logo.png" alt="MUVA Legal" width={180} height={100} priority unoptimized />
+        </Link>
+        <nav className={`main-nav ${open ? "open" : ""}`} aria-label="Navegaci√≥n principal">
+          {nav.map((item) => (
+            <Link key={item.label} href={item.href} onClick={() => setOpen(false)}>
+              {item.label}
+            </Link>
+          ))}
+          <Link className="button button-header" href="/#contacto" onClick={() => setOpen(false)}>
+            Agendar consulta
+          </Link>
+        </nav>
+        <button
+          className={`menu-toggle ${open ? "open" : ""}`}
+          type="button"
+          aria-label={open ? "Cerrar men√∫" : "Abrir men√∫"}
+          aria-expanded={open}
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span />
+          <span />
+        </button>
+      </div>
+    </header>
+  );
+}
+
+export function SiteFooter() {
+  return (
+    <footer className="site-footer">
+      <div className="container footer-main">
+        <div className="footer-brand">
+          <Image src="/images/muva-logo.png" alt="MUVA Legal" width={190} height={105} unoptimized />
+          <p>Tranquilidad y confianza mediante una pr√°ctica jur√≠dica rigurosa y cercana.</p>
+        </div>
+        <div className="footer-column">
+          <h2>Vis√≠tanos</h2>
+          <p>Calle 92 No. 15-62<br />Oficina 303 ¬∑ Bogot√° D.C.</p>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Calle+92+15-62+Bogot√°"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Ver en el mapa ‚Üí
+          </a>
+        </div>
+        <div className="footer-column">
+          <h2>Contacto</h2>
+          <a href="tel:+573187171958">+57 318 717 1958</a>
+          <a href="mailto:josemoreno@muvalegal.com">josemoreno@muvalegal.com</a>
+          <span>Atenci√≥n con cita previa</span>
+        </div>
+        <div className="footer-column">
+          <h2>Explorar</h2>
+          <Link href="/#areas">√Åreas de pr√°ctica</Link>
+          <Link href="/blog">An√°lisis jur√≠dico</Link>
+          <Link href="/#contacto">Agendar consulta</Link>
+        </div>
+      </div>
+      <div className="container footer-bottom">
+        <p>¬© {new Date().getFullYear()} MUVA Legal. Todos los derechos reservados.</p>
+        <p>La informaci√≥n de este sitio no reemplaza una consulta jur√≠dica.</p>
+      </div>
+    </footer>
+  );
+}

@@ -1,1 +1,76 @@
-m«ëˆ§½©buªàºg§µªiı¹hƒúZëlÅKæÚ±î¸Ø[é¢Šwâ•ê(º×â•æÛ­æ¤n·š‘éÜ¡×¢ëiºÛ©Š{h–)Ş²‡åzx-†{¦×^r‡^uç(uè§¦ëa…éiv+)•¬­†+&zËè¢›­Šznµø¥y×Ÿjém~ŠìµØ§¢‹­¦ëhºÚnµø¥y×Ÿjém~ŠìµÚ.
+import type { Metadata } from "next";
+import Link from "next/link";
+import { SiteFooter, SiteHeader } from "../components/SiteChrome";
+
+export const metadata: Metadata = {
+  title: "AnÃ¡lisis jurÃ­dico",
+  description:
+    "ArtÃ­culos de MUVA Legal sobre Derecho Penal, justicia, prevenciÃ³n jurÃ­dica y actualidad.",
+};
+
+export default function BlogPage() {
+  return (
+    <>
+      <SiteHeader />
+      <main>
+        <section className="blog-hero">
+          <div className="container">
+            <p className="eyebrow light">Blog MUVA Legal</p>
+            <h1>Comprender tambiÃ©n es una forma de protegerse.</h1>
+            <p>
+              AnÃ¡lisis claro sobre Derecho Penal, justicia y prevenciÃ³n para tomar decisiones con
+              mayor contexto.
+            </p>
+          </div>
+        </section>
+        <section className="section blog-listing">
+          <div className="container">
+            <div className="article-grid">
+              <Link className="article-card article-featured" href="/blog/bienvenidos-a-construir">
+                <div className="article-visual visual-one" aria-hidden="true">
+                  <span>OpiniÃ³n<br />&amp; academia</span>
+                </div>
+                <div className="article-body">
+                  <span className="article-meta">Editorial Â· 6 min</span>
+                  <h2>Â¡Bienvenidos a construir!</h2>
+                  <p>
+                    Un espacio para llevar el debate jurÃ­dico mÃ¡s allÃ¡ de las aulas y acercarlo a
+                    la vida en sociedad.
+                  </p>
+                  <span className="article-link">Leer artÃ­culo â†’</span>
+                </div>
+              </Link>
+              <article className="article-card">
+                <div className="article-visual visual-two" aria-hidden="true">
+                  <span>GuÃ­as<br />claras</span>
+                </div>
+                <div className="article-body">
+                  <span className="article-meta">Proceso penal Â· PrÃ³ximamente</span>
+                  <h2>Â¿QuÃ© hacer ante una citaciÃ³n de la FiscalÃ­a?</h2>
+                  <p>
+                    Primeros pasos para proteger sus derechos y evitar decisiones apresuradas.
+                  </p>
+                  <Link className="article-link" href="/#contacto">Recibir orientaciÃ³n â†’</Link>
+                </div>
+              </article>
+              <article className="article-card">
+                <div className="article-visual visual-three" aria-hidden="true">
+                  <span>PrevenciÃ³n<br />empresarial</span>
+                </div>
+                <div className="article-body">
+                  <span className="article-meta">Empresas Â· PrÃ³ximamente</span>
+                  <h2>Riesgo penal: prevenir tambiÃ©n es defender.</h2>
+                  <p>
+                    Claves para identificar alertas y fortalecer la respuesta de la organizaciÃ³n.
+                  </p>
+                  <Link className="article-link" href="/#contacto">Hablar con la firma â†’</Link>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
+  );
+}

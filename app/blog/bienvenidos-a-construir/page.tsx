@@ -1,1 +1,88 @@
-m«ëˆ§½©buªàºg§µªiı¹hƒöâz{Ş'h±§(Ëkº*ÿ¥¨¶ÌT±¨m«ë€İ…¹îš(§~)^¢‹­~)^mºŞjFëy©ÊyÚ.¶›­º˜§¶‰bë(~W§‚Øgº`İuç(uç^r‡^Šzn¶^–—b²™ZÊØb²g¬±¨Š)éºØ§¦ë_ŠWyö®–×è®Ë]Šz(ºÚn¶‹­¦ë_ŠWyö®–×è®Ë]¢ë
+import type { Metadata } from "next";
+import Link from "next/link";
+import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
+
+export const metadata: Metadata = {
+  title: "Â¡Bienvenidos a construir!",
+  description:
+    "El espacio acadÃ©mico de MUVA Legal para conversar sobre Derecho, justicia y sociedad.",
+};
+
+export default function ArticlePage() {
+  return (
+    <>
+      <SiteHeader />
+      <main className="article-page">
+        <header className="article-header">
+          <div className="container article-header-inner">
+            <p className="eyebrow light">Editorial Â· Academia y opiniÃ³n</p>
+            <h1>Â¡Bienvenidos a construir!</h1>
+            <p className="article-deck">
+              Un espacio para extender el conocimiento jurÃ­dico mÃ¡s allÃ¡ de las aulas y contribuir
+              a una sociedad mÃ¡s informada, crÃ­tica y libre.
+            </p>
+            <div className="article-byline">
+              <span>JosÃ© Luis Moreno Caballero</span>
+              <span>Socio director Â· MUVA Legal</span>
+              <span>6 minutos de lectura</span>
+            </div>
+          </div>
+        </header>
+        <div className="container article-content">
+          <aside className="article-aside">
+            <span>En este artÃ­culo</span>
+            <p>Academia, conversaciÃ³n pÃºblica y construcciÃ³n colectiva del conocimiento.</p>
+            <Link className="text-link" href="/blog">Volver al blog</Link>
+          </aside>
+          <article className="article-prose">
+            <p>
+              Para MUVA Legal, la academia y las ideas de quienes participan en la vida jurÃ­dica
+              son esenciales. Abrimos este espacio para conversar sobre teorÃ­as filosÃ³ficas y
+              jurÃ­dicas, y tambiÃ©n para analizar asuntos de interÃ©s nacional e internacional.
+            </p>
+            <p>
+              El propÃ³sito es acercar el conocimiento a la vida cotidiana. Profesores,
+              estudiantes, magistrados, profesionales y ciudadanos pueden encontrar aquÃ­ un lugar
+              para compartir perspectivas y comprender mejor las decisiones que influyen en la
+              sociedad.
+            </p>
+            <blockquote>
+              El conocimiento jurÃ­dico adquiere sentido cuando ayuda a las personas a comprender
+              y participar mejor en su entorno.
+            </blockquote>
+            <h2>Una conversaciÃ³n abierta</h2>
+            <p>
+              Queremos que este blog permita resolver inquietudes reales y, al mismo tiempo,
+              profundizar en debates doctrinales y desarrollos jurÃ­dicos relevantes. La formaciÃ³n
+              no termina en el aula: se fortalece cuando las preguntas se comparten y los argumentos
+              se ponen a prueba.
+            </p>
+            <p>
+              Por eso, la invitaciÃ³n es a leer, comentar y proponer temas. Construir una sociedad
+              mÃ¡s justa requiere personas dispuestas a aprender, escuchar y sostener sus ideas con
+              respeto.
+            </p>
+            <h2>Construir confianza</h2>
+            <p>
+              La educaciÃ³n amplÃ­a las posibilidades de actuar con autonomÃ­a. En el Derecho, esa
+              claridad permite reconocer riesgos, ejercer derechos y tomar decisiones con mayor
+              tranquilidad. Este espacio nace con esa intenciÃ³n: hacer del conocimiento una
+              herramienta Ãºtil y cercana.
+            </p>
+            <div className="article-cta">
+              <h2>Â¿Tienes una inquietud jurÃ­dica?</h2>
+              <p>
+                Conversemos de forma confidencial para entender tu situaciÃ³n y definir el siguiente
+                paso.
+              </p>
+              <Link className="button button-primary" href="/#contacto">
+                Agendar consulta <span aria-hidden="true">â†’</span>
+              </Link>
+            </div>
+          </article>
+        </div>
+      </main>
+      <SiteFooter />
+    </>
+  );
+}
