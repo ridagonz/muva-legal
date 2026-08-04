@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
   basePath: isGithubPages ? "/muva-legal" : undefined,
   assetPrefix: isGithubPages ? "/muva-legal/" : undefined,
   trailingSlash: isGithubPages,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isGithubPages ? "/muva-legal" : "",
+  },
   typescript: {
     ignoreBuildErrors: isGithubPages,
   },
