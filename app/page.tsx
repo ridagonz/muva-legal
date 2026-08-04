@@ -7,6 +7,8 @@ import { FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 
+const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
+
 const practices = [
   {
     number: "01",
@@ -221,7 +223,7 @@ export default function Home() {
     <>
       <div className="page-intro" aria-hidden="true">
         <div className="intro-mark">
-          <Image src="/images/muva-logo.png" alt="" width={450} height={250} priority unoptimized />
+          <Image src={assetPath("/images/muva-logo.png")} alt="" width={450} height={250} priority unoptimized />
         </div>
         <p>Estrategia penal / Bogotá</p>
       </div>
@@ -232,7 +234,7 @@ export default function Home() {
       <main>
         <section className="hero" id="inicio">
           <div className="hero-media" aria-hidden="true">
-            <Image src="/images/jose-luis-moreno.png" alt="" fill priority unoptimized sizes="(max-width: 800px) 100vw, 48vw" />
+            <Image src={assetPath("/images/jose-luis-moreno.png")} alt="" fill priority unoptimized sizes="(max-width: 800px) 100vw, 48vw" />
             <div className="hero-media-wash" />
           </div>
           <div className="hero-coordinate hero-coordinate-a">04° 39&apos; N</div>
@@ -279,7 +281,7 @@ export default function Home() {
             <div className="section-rule light-rule reveal"><span>02</span><h2>Socio director</h2><i /></div>
             <div className="director-layout">
               <div className="director-visual reveal" data-cursor="Perfil">
-                <Image src="/images/jose-luis-moreno.png" alt="José Luis Moreno Caballero, CEO de MUVA Legal" fill unoptimized sizes="(max-width: 800px) 92vw, 38vw" />
+                <Image src={assetPath("/images/jose-luis-moreno.png")} alt="José Luis Moreno Caballero, CEO de MUVA Legal" fill unoptimized sizes="(max-width: 800px) 92vw, 38vw" />
                 <span className="visual-index">JLM / 01</span>
               </div>
               <div className="director-copy reveal">
