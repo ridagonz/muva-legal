@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
+
 const nav = [
   { label: "La firma", href: "/#firma" },
   { label: "José Luis Moreno", href: "/#director" },
@@ -27,7 +29,7 @@ export function SiteHeader() {
     <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
       <div className="container header-inner">
         <Link className="brand" href="/" aria-label="MUVA Legal, inicio">
-          <Image src="/images/muva-logo.png" alt="MUVA Legal" width={180} height={100} priority unoptimized />
+          <Image src={assetPath("/images/muva-logo.png")} alt="MUVA Legal" width={180} height={100} priority unoptimized />
         </Link>
         <nav className={`main-nav ${open ? "open" : ""}`} aria-label="Navegación principal">
           {nav.map((item) => (
@@ -59,7 +61,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="container footer-main">
         <div className="footer-brand">
-          <Image src="/images/muva-logo.png" alt="MUVA Legal" width={190} height={105} unoptimized />
+          <Image src={assetPath("/images/muva-logo.png")} alt="MUVA Legal" width={190} height={105} unoptimized />
           <p>Tranquilidad y confianza mediante una práctica jurídica rigurosa y cercana.</p>
         </div>
         <div className="footer-column">
