@@ -49,6 +49,34 @@ const socialLinks = [
   { icon: FaInstagram, name: "Instagram", href: "https://www.instagram.com/josemorenopenalista" },
 ];
 
+type HeroSlide = {
+  id: string;
+  src: string;
+  alt: string;
+  position: string;
+};
+
+const defaultHeroSlides: HeroSlide[] = [
+  {
+    id: "jose-luis-moreno",
+    src: "/images/jose-luis-moreno.png",
+    alt: "José Luis Moreno Caballero, abogado penalista y socio director de MUVA Legal",
+    position: "50% 12%",
+  },
+  {
+    id: "oficina-muva",
+    src: "/images/hero-oficina-muva.png",
+    alt: "Oficina de consulta jurídica de MUVA Legal en Bogotá",
+    position: "58% center",
+  },
+  {
+    id: "revision-caso",
+    src: "/images/hero-revision-caso.png",
+    alt: "Revisión rigurosa y confidencial de un expediente jurídico",
+    position: "58% center",
+  },
+];
+
 const googleForm = {
   action: process.env.NEXT_PUBLIC_GOOGLE_FORM_ACTION ?? "",
   nameField: process.env.NEXT_PUBLIC_GOOGLE_FORM_NAME_FIELD ?? "entry.name",
@@ -138,6 +166,44 @@ function ContactForm() {
 
 export default function Home() {
   const [activePractice, setActivePractice] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [carouselPaused, setCarouselPaused] = useState(false);
+  const [heroSlides, setHeroSlides] = useState(defaultHeroSlides);
+
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_BASE_PATH) return;
+
+    let cancelled = false;
+    fetch("/api/carousel", { cache: "no-store" })
+      .then((response) => (response.ok ? response.json() : Promise.reject()))
+      .then((data: { slides?: HeroSlide[] }) => {
+        if (!cancelled && data.slides?.length) {
+          setHeroSlides(data.slides);
+          setCurrentSlide(0);
+        }
+      })
+      .catch(() => undefined);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (
+      carouselPaused ||
+      heroSlides.length < 2 ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    const interval = window.setInterval(() => {
+      setCurrentSlide((slide) => (slide + 1) % heroSlides.length);
+    }, 6500);
+
+    return () => window.clearInterval(interval);
+  }, [carouselPaused, heroSlides.length]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -233,8 +299,20 @@ export default function Home() {
 
       <main>
         <section className="hero" id="inicio">
-          <div className="hero-media" aria-hidden="true">
-            <Image src={assetPath("/images/jose-luis-moreno.png")} alt="" fill priority unoptimized sizes="(max-width: 800px) 100vw, 48vw" />
+          <div className="hero-media" aria-live="polite">
+            {heroSlides.map((slide, index) => (
+              <Image
+                className={`hero-slide ${currentSlide === index ? "active" : ""}`}
+                src={assetPath(slide.src)}
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                unoptimized
+                sizes="(max-width: 800px) 100vw, 49vw"
+                style={{ objectPosition: slide.position }}
+                key={slide.src}
+              />
+            ))}
             <div className="hero-media-wash" />
           </div>
           <div className="hero-coordinate hero-coordinate-a">04° 39&apos; N</div>
@@ -254,6 +332,45 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-scroll" aria-hidden="true"><span>Descubrir</span><i /></div>
+          {heroSlides.length > 1 && (
+            <div className="hero-carousel-controls" aria-label="Control del carrusel principal">
+              <button
+                type="button"
+                onClick={() => setCurrentSlide((slide) => (slide - 1 + heroSlides.length) % heroSlides.length)}
+                aria-label="Ver imagen anterior"
+              >
+                ←
+              </button>
+              <div className="hero-dots" role="group" aria-label="Elegir imagen">
+                {heroSlides.map((slide, index) => (
+                  <button
+                    className={currentSlide === index ? "active" : ""}
+                    type="button"
+                    onClick={() => setCurrentSlide(index)}
+                    aria-label={`Ver imagen ${index + 1} de ${heroSlides.length}`}
+                    aria-current={currentSlide === index ? "true" : undefined}
+                    key={slide.src}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => setCurrentSlide((slide) => (slide + 1) % heroSlides.length)}
+                aria-label="Ver imagen siguiente"
+              >
+                →
+              </button>
+              <button
+                className="hero-pause"
+                type="button"
+                onClick={() => setCarouselPaused((paused) => !paused)}
+                aria-pressed={carouselPaused}
+                aria-label={carouselPaused ? "Reanudar carrusel" : "Pausar carrusel"}
+              >
+                {carouselPaused ? "Reanudar" : "Pausar"}
+              </button>
+            </div>
+          )}
         </section>
 
         <div className="kinetic-bar" aria-hidden="true">
