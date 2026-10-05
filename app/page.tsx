@@ -6,6 +6,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
+import { PayPalPayment } from "./components/PayPalPayment";
 
 const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 
@@ -543,16 +544,13 @@ export default function Home() {
             <div className="section-rule reveal"><span>07</span><h2>Contacto</h2><i /></div>
             <div className="contact-heading reveal">
               <h2>Todo caso comienza<br />con una <em>conversación.</em></h2>
-              <div><a href="tel:+573187171958">+57 318 717 1958</a><a href="mailto:josemoreno@muvalegal.com">josemoreno@muvalegal.com</a><span>Bogotá D.C. · Colombia</span></div>
+              <div><a href="tel:+573187171958">+57 318 717 1958</a><a href="mailto:josemoreno@muvalegal.com">josemoreno@muvalegal.com</a><span>Bogotá D.C. · Colombia</span><PayPalPayment /></div>
             </div>
             <div className="form-shell reveal"><ContactForm /></div>
           </div>
         </section>
       </main>
 
-      <a className="whatsapp-float" href="https://wa.me/573187171958?text=Hola%20MUVA%20Legal%2C%20quisiera%20agendar%20una%20consulta." target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp" data-magnetic data-cursor="WhatsApp">
-        <span>WA</span><i>Consulta privada</i>
-      </a>
       <SiteFooter />
     </>
   );

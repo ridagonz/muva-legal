@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FaWhatsapp } from "react-icons/fa";
 import "./globals.css";
 
 const isGithubPages = process.env.GITHUB_PAGES === "true";
@@ -44,7 +45,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>
+        {children}
+        <a className="whatsapp-float" href="https://wa.me/573187171958?text=Hola%20MUVA%20Legal%2C%20quisiera%20agendar%20una%20consulta." target="_blank" rel="noopener noreferrer" aria-label="Escribir a MUVA Legal por WhatsApp" data-cursor="WhatsApp">
+          <FaWhatsapp aria-hidden="true" /><i>WhatsApp</i>
+        </a>
+      </body>
     </html>
   );
 }

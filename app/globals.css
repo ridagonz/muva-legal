@@ -1536,31 +1536,68 @@ h3 {
   margin: 8px 0 0;
 }
 
+.contact-payment {
+  margin-top: 24px;
+}
+
+.contact-payment .contact-paypal-button {
+  align-items: center;
+  background: #ffc439;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #003087;
+  display: inline-flex;
+  font-size: 1rem;
+  gap: 10px;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 22px;
+  text-decoration: none;
+}
+
+.contact-paypal-button svg { width: 22px; height: 22px; }
+.contact-paypal-button:not(:disabled):hover { background: #f2b72d; }
+.contact-paypal-button:focus-visible { outline: 3px solid #003087; outline-offset: 4px; }
+.contact-paypal-button:disabled { opacity: .65; cursor: not-allowed; }
+.contact-payment p { color: var(--muted); font-size: .875rem; margin: 10px 0 0; }
+
 .whatsapp-float {
   align-items: center;
-  background: var(--sky);
-  bottom: 22px;
-  color: var(--navy-deep);
+  background: #087c44;
+  border-radius: 999px;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .24);
+  color: #fff;
   display: flex;
   gap: 10px;
-  padding: 11px 15px;
+  min-height: 56px;
+  min-width: 56px;
+  justify-content: center;
+  padding: 12px 16px;
   position: fixed;
-  right: 22px;
+  right: max(22px, env(safe-area-inset-right));
   transition: background .25s ease, transform .25s ease;
   z-index: 90;
 }
 
 .whatsapp-float:hover {
-  background: var(--white);
+  background: #065f34;
+  transform: translateY(-3px);
 }
 
-.whatsapp-float span {
-  font-size: .63rem;
-  font-weight: 900;
+.whatsapp-float:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 4px;
+}
+
+.whatsapp-float svg {
+  height: 28px;
+  width: 28px;
+  flex-shrink: 0;
 }
 
 .whatsapp-float i {
-  font-size: .59rem;
+  font-size: .875rem;
   font-style: normal;
   font-weight: 800;
   letter-spacing: .08em;

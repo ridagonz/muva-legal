@@ -8,7 +8,7 @@ const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}$
 
 const nav = [
   { label: "La firma", href: "/#firma" },
-  { label: "José Luis Moreno", href: "/#director" },
+  { label: "Nosotros", href: "/#director" },
   { label: "Áreas", href: "/#areas" },
   { label: "Experiencia", href: "/#experiencia" },
   { label: "Blog", href: "/blog" },
