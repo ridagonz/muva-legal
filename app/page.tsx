@@ -492,29 +492,7 @@ export default function Home() {
               <h2>Comprender antes<br />de <em>decidir.</em></h2>
               <Link className="editorial-link" href="/blog" data-cursor="Ver blog">Todos los artículos <span>→</span></Link>
             </div>
-            <div className="article-list">
-              <Link className="article-row reveal" href="/blog/bienvenidos-a-construir" data-cursor="Leer">
-                <span className="article-count">01</span>
-                <span className="article-category">Editorial / Academia</span>
-                <h3>¡Bienvenidos a construir!</h3>
-                <p>Un espacio para llevar el debate jurídico más allá de las aulas.</p>
-                <i>→</i>
-              </Link>
-              <a className="article-row reveal" href="#contacto" data-cursor="Próximamente">
-                <span className="article-count">02</span>
-                <span className="article-category">Proceso penal / Guía</span>
-                <h3>¿Qué hacer ante una citación de la Fiscalía?</h3>
-                <p>Primeras decisiones para proteger tus derechos.</p>
-                <i>→</i>
-              </a>
-              <a className="article-row reveal" href="#contacto" data-cursor="Próximamente">
-                <span className="article-count">03</span>
-                <span className="article-category">Empresas / Prevención</span>
-                <h3>Riesgo penal: prevenir también es defender.</h3>
-                <p>Alertas y respuesta para las organizaciones.</p>
-                <i>→</i>
-              </a>
-            </div>
+            <div className="article-list" aria-label="Artículos del Blog" />
           </div>
         </section>
 

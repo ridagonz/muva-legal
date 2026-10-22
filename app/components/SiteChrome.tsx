@@ -12,6 +12,7 @@ const nav = [
   { label: "Áreas", href: "/#areas" },
   { label: "Experiencia", href: "/#experiencia" },
   { label: "Blog", href: "/blog" },
+  { label: "Prensa", href: "/prensa" },
   { label: "Editorial", href: "/editorial" },
 ];
 
@@ -86,6 +87,7 @@ export function SiteFooter() {
           <h2>Explorar</h2>
           <Link href="/#areas">Áreas de práctica</Link>
           <Link href="/blog">Análisis jurídico</Link>
+          <Link href="/prensa">Prensa</Link>
           <Link href="/editorial">Editorial y publicaciones</Link>
           <Link href="/#contacto">Agendar consulta</Link>
         </div>

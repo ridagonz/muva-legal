@@ -79,7 +79,7 @@ export default function MediaCoverage() {
       <div className="container">
         <div className={styles.heading}>
           <div>
-            <p className={styles.eyebrow}>Blog / En medios de comunicación</p>
+            <p className={styles.eyebrow}>Prensa / En medios de comunicación</p>
             <h2 id="medios-title">Una voz jurídica<br /><em>en la conversación pública.</em></h2>
           </div>
           <div className={styles.intro}>
