@@ -5,8 +5,8 @@ import "./globals.css";
 const isGithubPages = process.env.GITHUB_PAGES === "true";
 const basePath = isGithubPages ? "/muva-legal" : "";
 const socialImage = isGithubPages
-  ? "https://ridagonz.github.io/muva-legal/og.png"
-  : "/og.png";
+  ? "https://ridagonz.github.io/muva-legal/social/muva-legal-whatsapp-v2.jpg"
+  : "https://muva-legal-penal.rigonz.chatgpt.site/social/muva-legal-whatsapp-v2.jpg";
 
 export const metadata: Metadata = {
     title: {
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       type: "website",
       locale: "es_CO",
       siteName: "MUVA Legal",
-      images: [{ url: socialImage, width: 1200, height: 630, alt: "MUVA Legal - Estrategia penal con criterio" }],
+      images: [{ url: socialImage, secureUrl: socialImage, type: "image/jpeg", width: 1200, height: 630, alt: "MUVA Legal — Estrategia penal con criterio" }],
     },
     twitter: {
       card: "summary_large_image",
