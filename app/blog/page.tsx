@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import MediaCoverage from "./MediaCoverage";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 
 export const metadata: Metadata = {
-  title: "Análisis jurídico",
+  title: "Blog y MUVA Legal en medios",
   description:
-    "Artículos de MUVA Legal sobre Derecho Penal, justicia, prevención jurídica y actualidad.",
+    "Artículos, entrevistas, videos y noticias de MUVA Legal y José Luis Moreno Caballero en televisión, radio y prensa.",
 };
 
 export default function BlogPage() {
@@ -23,7 +24,8 @@ export default function BlogPage() {
             </p>
           </div>
         </section>
-        <section className="section blog-listing">
+        <MediaCoverage />
+        <section className="section blog-listing" aria-label="Artículos de análisis jurídico">
           <div className="container">
             <div className="article-grid">
               <Link className="article-card article-featured" href="/blog/bienvenidos-a-construir">
