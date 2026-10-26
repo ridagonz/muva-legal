@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 
 const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
@@ -13,45 +13,43 @@ type Product = {
   description: string;
   format: string;
   price: number;
+  priceLabel: string;
 };
 
 type CartItem = Product & { quantity: number };
 
 const products: Product[] = [
   {
-    id: "libro-editorial-01",
+    id: "institutos-especiales-jep",
     type: "Libro jurídico",
-    title: "Título de la publicación",
+    title: "Institutos especiales de la justicia especial para la paz",
     description:
-      "Espacio para presentar el enfoque de la obra, sus temas principales y el lector al que está dirigida.",
-    format: "Libro impreso",
-    price: 82000,
+      "Obra académica coescrita por José Luis Moreno Caballero y publicada por la Universidad Externado de Colombia.",
+    format: "Libro",
+    price: 0,
+    priceLabel: "Compra por consulta",
   },
   {
-    id: "documento-editorial-02",
-    type: "Documento académico",
-    title: "Título del documento",
+    id: "neoconstitucionalismo-derecho-trabajo",
+    type: "Libro jurídico",
+    title: "El neoconstitucionalismo y la constitucionalización del Derecho del Trabajo",
     description:
-      "Descripción breve del documento, su aporte académico y los asuntos jurídicos que desarrolla.",
-    format: "Edición digital",
-    price: 42000,
+      "Publicación de Cecilia Margarita Durán Ujueta sobre el diálogo entre constitucionalismo y Derecho del Trabajo.",
+    format: "Libro",
+    price: 0,
+    priceLabel: "Compra por consulta",
   },
   {
-    id: "guia-editorial-03",
-    type: "Guía práctica",
-    title: "Título de la guía",
+    id: "carrera-docente-colombia",
+    type: "Publicación académica",
+    title: "La carrera docente en Colombia",
     description:
-      "Resumen del contenido práctico, las preguntas que resuelve y el valor que ofrece al lector.",
-    format: "Edición digital",
-    price: 36000,
+      "Obra de Eliana Eugenio Torrado vinculada a su trabajo académico y de investigación jurídica.",
+    format: "Libro",
+    price: 0,
+    priceLabel: "Compra por consulta",
   },
 ];
-
-const currency = new Intl.NumberFormat("es-CO", {
-  style: "currency",
-  currency: "COP",
-  maximumFractionDigits: 0,
-});
 
 export default function EditorialPage() {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -81,11 +79,6 @@ export default function EditorialPage() {
   }, [cart]);
 
   const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
-  const total = useMemo(
-    () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
-    [cart],
-  );
-
   function addToCart(product: Product) {
     setCart((current) => {
       const existing = current.find((item) => item.id === product.id);
@@ -110,12 +103,15 @@ export default function EditorialPage() {
   function checkout() {
     const checkoutUrl = process.env.NEXT_PUBLIC_PAYPAL_CHECKOUT_URL ?? "";
     if (!checkoutUrl) {
-      setMessage(
-        "El botón está listo. Falta ingresar el enlace de cobro de la cuenta PayPal de MUVA Legal para activarlo.",
-      );
+      const selectedTitles = cart.map((item) => `${item.quantity} × ${item.title}`).join("\n");
+      window.location.href = `mailto:josemoreno@muvalegal.com?subject=${encodeURIComponent("Solicitud de compra editorial MUVA")}&body=${encodeURIComponent(`Quisiera adquirir las siguientes publicaciones:\n\n${selectedTitles}`)}`;
       return;
     }
     window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+  }
+
+  function requestDownload(product: Product) {
+    setMessage(`La descarga de “${product.title}” se habilitará cuando esté disponible el archivo autorizado por su editorial.`);
   }
 
   return (
@@ -131,8 +127,8 @@ export default function EditorialPage() {
               </h1>
             </div>
             <p>
-              Libros, documentos académicos y guías de José Luis Moreno Caballero,
-              disponibles para compra directa.
+              Libros y publicaciones de las y los profesionales de MUVA Legal,
+              disponibles para compra o consulta editorial.
             </p>
           </div>
         </header>
@@ -143,10 +139,10 @@ export default function EditorialPage() {
               <span>01</span><h2 id="catalogo-title">Catálogo editorial</h2><i />
             </div>
             <div className="catalogue-notice" role="note">
-              <strong>Contenido demostrativo</strong>
+              <strong>Publicaciones verificadas</strong>
               <span>
-                Los títulos, precios, portadas y enlaces se reemplazarán con la información
-                definitiva de cada publicación.
+                La compra se gestiona con el equipo editorial. Las descargas se activarán únicamente
+                con el archivo autorizado y la ficha bibliográfica completa.
               </span>
             </div>
 
@@ -162,7 +158,7 @@ export default function EditorialPage() {
                         height={84}
                         unoptimized
                       />
-                      <span>Portada por definir</span>
+                      <span>MUVA Editorial</span>
                       <i>{String(index + 1).padStart(2, "0")}</i>
                     </div>
                     <div className="product-body">
@@ -170,10 +166,11 @@ export default function EditorialPage() {
                       <h2>{product.title}</h2>
                       <p>{product.description}</p>
                       <div className="product-buy">
-                        <strong>{currency.format(product.price)}</strong>
-                        <button type="button" onClick={() => addToCart(product)}>
-                          Agregar al carrito <span aria-hidden="true">＋</span>
-                        </button>
+                        <strong>{product.priceLabel}</strong>
+                        <div className="product-actions">
+                          <button type="button" onClick={() => addToCart(product)}>Comprar <span aria-hidden="true">＋</span></button>
+                          <button type="button" onClick={() => requestDownload(product)}>Descargar <span aria-hidden="true">↓</span></button>
+                        </div>
                       </div>
                     </div>
                   </article>
@@ -182,19 +179,19 @@ export default function EditorialPage() {
 
               <aside className="cart-panel" aria-labelledby="cart-title">
                 <div className="cart-heading">
-                  <div><span>Compra</span><h2 id="cart-title">Carrito</h2></div>
+                  <div><span>Compra</span><h2 id="cart-title">Solicitud</h2></div>
                   <strong>{String(itemCount).padStart(2, "0")}</strong>
                 </div>
                 {cart.length === 0 ? (
                   <div className="cart-empty">
                     <p>Tu carrito está vacío.</p>
-                    <span>Agrega una publicación para iniciar la compra.</span>
+                    <span>Agrega una publicación para preparar tu solicitud de compra.</span>
                   </div>
                 ) : (
                   <div className="cart-items">
                     {cart.map((item) => (
                       <div className="cart-item" key={item.id}>
-                        <div><strong>{item.title}</strong><span>{currency.format(item.price)}</span></div>
+                        <div><strong>{item.title}</strong><span>Compra por consulta</span></div>
                         <div className="quantity-control" aria-label={`Cantidad de ${item.title}`}>
                           <button type="button" onClick={() => updateQuantity(item.id, item.quantity - 1)} aria-label="Restar uno">−</button>
                           <span>{item.quantity}</span>
@@ -204,11 +201,11 @@ export default function EditorialPage() {
                     ))}
                   </div>
                 )}
-                <div className="cart-total"><span>Total</span><strong>{currency.format(total)}</strong></div>
+                <div className="cart-total"><span>Solicitud</span><strong>{itemCount} título{itemCount === 1 ? "" : "s"}</strong></div>
                 <button className="paypal-button" type="button" disabled={!cart.length} onClick={checkout}>
-                  <span>Pagar con</span><strong>PayPal</strong>
+                  <span>Continuar con</span><strong>la compra</strong>
                 </button>
-                <p className="checkout-note">El pago se realizará en el entorno seguro de PayPal.</p>
+                <p className="checkout-note">La solicitud se enviará al equipo editorial. Si se configura PayPal, el pago se abrirá en su entorno seguro.</p>
                 <p className="cart-message" role="status" aria-live="polite">{message}</p>
               </aside>
             </div>

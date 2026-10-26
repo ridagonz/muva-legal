@@ -881,6 +881,117 @@ h3 {
   font-weight: 500;
 }
 
+.profile-note {
+  color: rgba(255,255,255,.62);
+  font-size: .82rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 520px;
+}
+
+.team-intro {
+  border-top: 1px solid rgba(255,255,255,.2);
+  margin: clamp(70px, 9vw, 140px) 6vw 0;
+  padding: 28px 0 0;
+}
+
+.team-intro p {
+  color: rgba(255,255,255,.76);
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  line-height: 1.35;
+  margin: 0;
+  max-width: 850px;
+}
+
+.team-grid {
+  display: grid;
+  gap: 2px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 55px 6vw 0;
+}
+
+.team-card {
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.16);
+  min-height: 365px;
+  padding: clamp(28px, 3vw, 42px);
+}
+
+.team-monogram {
+  align-items: flex-end;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+  color: var(--sky);
+  display: flex;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.5rem, 4vw, 4.4rem);
+  justify-content: space-between;
+  letter-spacing: -.07em;
+  line-height: 1;
+  padding-bottom: 22px;
+}
+
+.team-monogram span {
+  color: rgba(255,255,255,.45);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: .58rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.team-card > p:not(.team-bio) {
+  color: var(--sky);
+  font-size: .58rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  margin: 27px 0 12px;
+  text-transform: uppercase;
+}
+
+.team-card h3 {
+  font-size: clamp(1.5rem, 2.2vw, 2.35rem);
+  letter-spacing: -.05em;
+  line-height: 1;
+  margin: 0 0 16px;
+}
+
+.team-card > strong {
+  color: rgba(255,255,255,.82);
+  display: block;
+  font-size: .78rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.team-bio {
+  color: rgba(255,255,255,.6);
+  font-size: .78rem;
+  line-height: 1.58;
+  margin: 20px 0 0;
+}
+
+.allies-note {
+  border-top: 1px solid rgba(255,255,255,.2);
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 160px minmax(0, 660px);
+  margin: 2px 6vw 0;
+  padding: 30px 0 8px;
+}
+
+.allies-note strong {
+  color: var(--sky);
+  font-size: .58rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.allies-note p {
+  color: rgba(255,255,255,.62);
+  font-size: .82rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* Áreas */
 .practices {
   background: var(--paper);
@@ -998,7 +1109,7 @@ h3 {
 }
 
 .practice-panel > p {
-  bottom: 72px;
+  bottom: 132px;
   font-size: clamp(.86rem, 1vw, 1rem);
   margin: 0;
   max-width: 450px;
@@ -1011,6 +1122,39 @@ h3 {
 .practice-panel.active > p,
 .practice-panel.active .panel-short {
   opacity: .88;
+  transform: translateY(0);
+}
+
+.practice-subareas {
+  bottom: 22px;
+  display: grid;
+  gap: 5px 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  left: clamp(30px, 4vw, 62px);
+  list-style: none;
+  margin: 0;
+  max-width: 530px;
+  opacity: 0;
+  padding: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateY(18px);
+  transition: opacity .4s .3s ease, transform .4s .3s ease;
+}
+
+.practice-subareas li {
+  font-size: .65rem;
+  line-height: 1.3;
+}
+
+.practice-subareas li::before {
+  color: var(--sky);
+  content: "•";
+  margin-right: 7px;
+}
+
+.practice-panel.active .practice-subareas {
+  opacity: .9;
   transform: translateY(0);
 }
 
@@ -1673,7 +1817,7 @@ h3 {
   margin: 0;
 }
 
-/* Blog y artículo */
+/* Cabeceras editoriales y de prensa */
 .eyebrow {
   color: var(--blue);
   font-size: .62rem;
@@ -2077,6 +2221,17 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .team-grid {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .team-intro,
+  .allies-note {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .director-visual {
     aspect-ratio: 1 / 1.12;
     max-width: 620px;
@@ -2353,11 +2508,18 @@ h3 {
   }
 
   .practice-panel.active {
-    min-height: 365px;
+    min-height: 450px;
   }
 
   .practice-panel > p {
-    bottom: 78px;
+    bottom: 152px;
+  }
+
+  .practice-subareas {
+    bottom: 26px;
+    grid-template-columns: 1fr;
+    left: 56px;
+    right: 24px;
   }
 
   .method-list li {
@@ -2793,6 +2955,13 @@ h3 {
   font-weight: 600;
 }
 
+.product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  justify-content: flex-end;
+}
+
 .product-buy button {
   align-items: center;
   background: transparent;
@@ -2804,6 +2973,10 @@ h3 {
   letter-spacing: .08em;
   padding: 8px 0;
   text-transform: uppercase;
+}
+
+.product-actions button + button {
+  color: var(--ink);
 }
 
 .product-buy button span {
@@ -3029,6 +3202,21 @@ h3 {
 }
 
 @media (max-width: 760px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    margin-top: 36px;
+  }
+
+  .team-card {
+    min-height: 0;
+  }
+
+  .allies-note {
+    gap: 12px;
+    grid-template-columns: 1fr;
+    margin-top: 2px;
+  }
+
   .hero-carousel-controls {
     bottom: 22px;
     left: 20px;

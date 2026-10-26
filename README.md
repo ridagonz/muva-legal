@@ -8,7 +8,6 @@ Sitio institucional completo para MUVA Legal, centrado en Derecho Penal y en el 
 - Perfil del socio director y credenciales académicas.
 - Cinco áreas de práctica penal.
 - Método de atención, enfoque de confidencialidad y redes sociales.
-- Blog con portada y un artículo editorial completo.
 - Sección editorial con catálogo demostrativo, carrito persistente y conexión preparada para PayPal.
 - Formulario con validación, verificación de seguridad y conexión preparada para Google Forms.
 - Diseño adaptable a computador, tableta y celular.

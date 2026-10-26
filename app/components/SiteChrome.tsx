@@ -8,10 +8,9 @@ const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}$
 
 const nav = [
   { label: "La firma", href: "/#firma" },
-  { label: "Nosotros", href: "/#director" },
+  { label: "Equipo", href: "/#equipo" },
   { label: "Áreas", href: "/#areas" },
   { label: "Experiencia", href: "/#experiencia" },
-  { label: "Blog", href: "/blog" },
   { label: "Prensa", href: "/prensa" },
   { label: "Editorial", href: "/editorial" },
 ];
@@ -85,8 +84,8 @@ export function SiteFooter() {
         </div>
         <div className="footer-column">
           <h2>Explorar</h2>
+          <Link href="/#equipo">Equipo</Link>
           <Link href="/#areas">Áreas de práctica</Link>
-          <Link href="/blog">Análisis jurídico</Link>
           <Link href="/prensa">Prensa</Link>
           <Link href="/editorial">Editorial y publicaciones</Link>
           <Link href="/#contacto">Agendar consulta</Link>

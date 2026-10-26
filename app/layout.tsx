@@ -6,7 +6,7 @@ const isGithubPages = process.env.GITHUB_PAGES === "true";
 const basePath = isGithubPages ? "/muva-legal" : "";
 const socialImage = isGithubPages
   ? "https://ridagonz.github.io/muva-legal/social/muva-legal-whatsapp-v2.jpg"
-  : "https://muva-legal-penal.rigonz.chatgpt.site/social/muva-legal-whatsapp-v2.jpg";
+  : "https://muva-legal-bogota-2026.rigonz.chatgpt.site/social/muva-legal-whatsapp-v2.jpg";
 
 export const metadata: Metadata = {
     title: {

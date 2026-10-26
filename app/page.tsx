@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -13,33 +12,53 @@ const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}$
 const practices = [
   {
     number: "01",
-    title: "Defensa penal",
-    short: "Investigación, audiencias y juicio.",
-    text: "Acompañamiento desde la primera actuación hasta el juicio, con preparación rigurosa de cada decisión, audiencia y escenario posible.",
+    title: "Litigio penal estratégico",
+    short: "Investigaciones, defensa y casación.",
+    text: "Representamos asuntos penales que exigen una estrategia coordinada desde el primer momento, con lectura probatoria, procesal y reputacional.",
+    areas: ["Defensa penal", "Representación de víctimas", "Penal económico y empresarial", "Casación penal"],
   },
   {
     number: "02",
-    title: "Representación de víctimas",
-    short: "Protección y reparación integral.",
-    text: "Participación activa dentro del proceso penal para proteger los derechos de la víctima y orientar una reparación integral.",
+    title: "Derecho público",
+    short: "Constitucional y organismos de control.",
+    text: "Acompañamos controversias que pueden avanzar de forma paralela ante autoridades, con una coordinación jurídica integral.",
+    areas: ["Constitucional", "Administrativo y contratación estatal", "Defensa disciplinaria", "Responsabilidad fiscal"],
   },
   {
     number: "03",
-    title: "Recursos extraordinarios",
-    short: "Casación, revisión y protección.",
-    text: "Estudio estratégico de decisiones judiciales y presentación de los recursos que correspondan cuando el caso exige una nueva revisión.",
+    title: "Derecho empresarial",
+    short: "Decisiones, contratos y contingencias.",
+    text: "Acompañamos a organizaciones en decisiones corporativas, relaciones jurídicas y controversias que requieren anticipar riesgos.",
+    areas: ["Comercial y societario", "Contratos y operaciones", "Prevención de contingencias"],
   },
   {
     number: "04",
-    title: "Extinción de dominio",
-    short: "Patrimonio, titulares y terceros.",
-    text: "Representación de titulares y terceros afectados, con una lectura integral de los bienes, los hechos y la evolución del proceso.",
+    title: "Laboral y seguridad social",
+    short: "Litigio, prevención y casación laboral.",
+    text: "Asesoramos a empleadores, trabajadores, directivos y pensionados en controversias laborales y de seguridad social.",
+    areas: ["Relaciones laborales", "Procesos individuales y colectivos", "Pensiones y seguridad social", "Casación laboral"],
   },
   {
     number: "05",
-    title: "Prevención empresarial",
-    short: "Riesgo penal y cumplimiento.",
-    text: "Conceptos, protocolos y programas de cumplimiento para anticipar riesgos penales y fortalecer la respuesta de las organizaciones.",
+    title: "Asuntos privados y patrimoniales",
+    short: "Personas, familias y empresas.",
+    text: "Protegemos intereses civiles, familiares y patrimoniales con sensibilidad, negociación y estrategia procesal.",
+    areas: ["Obligaciones y responsabilidad civil", "Propiedad y sucesiones", "Familia y patrimonio", "Negociación y conciliación"],
+  },
+];
+
+const team = [
+  {
+    initials: "CMD", name: "César Fernando Mercado Durán", role: "Socio", focus: "Derecho público, constitucional, laboral y seguridad social", bio: "Abogado, Doctor y Magíster en Derecho, con experiencia jurisdiccional, académica, pública y privada. Su práctica se concentra en derecho administrativo, constitucional, laboral, seguridad social y métodos alternativos de solución de conflictos.",
+  },
+  {
+    initials: "CDU", name: "Cecilia Margarita Durán Ujueta", role: "Socia", focus: "Laboral, seguridad social y casación laboral", bio: "Abogada y exmagistrada de la Corte Suprema de Justicia, Sala de Casación Laboral. Cuenta con más de 30 años de experiencia en litigio, docencia y administración de justicia.",
+  },
+  {
+    initials: "EET", name: "Eliana Eugenio Torrado", role: "Socia", focus: "Derecho procesal civil y derecho probatorio", bio: "Abogada, especialista en Derecho Procesal Civil y Razonamiento Probatorio, con trabajo docente e investigativo en formación jurídica, prueba y proceso civil.",
+  },
+  {
+    initials: "JPP", name: "Johan David Palomino Penagos", role: "Abogado Senior", focus: "Derecho penal, disciplinario y extinción de dominio", bio: "Abogado y especialista en Derecho Penal, con experiencia en representación judicial, asesoría y asuntos que involucran altas responsabilidades públicas y privadas.",
   },
 ];
 
@@ -172,10 +191,11 @@ export default function Home() {
   const [heroSlides, setHeroSlides] = useState(defaultHeroSlides);
 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_BASE_PATH) return;
+    const carouselApi = process.env.NEXT_PUBLIC_CAROUSEL_API;
+    if (process.env.NEXT_PUBLIC_BASE_PATH || !carouselApi) return;
 
     let cancelled = false;
-    fetch("/api/carousel", { cache: "no-store" })
+    fetch(carouselApi, { cache: "no-store" })
       .then((response) => (response.ok ? response.json() : Promise.reject()))
       .then((data: { slides?: HeroSlide[] }) => {
         if (!cancelled && data.slides?.length) {
@@ -394,28 +414,44 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="director section" id="director">
+        <section className="director section" id="equipo">
           <div className="container">
-            <div className="section-rule light-rule reveal"><span>02</span><h2>Socio director</h2><i /></div>
+            <div className="section-rule light-rule reveal"><span>02</span><h2>Equipo</h2><i /></div>
             <div className="director-layout">
               <div className="director-visual reveal" data-cursor="Perfil">
-                <Image src={assetPath("/images/jose-luis-moreno.png")} alt="José Luis Moreno Caballero, CEO de MUVA Legal" fill unoptimized sizes="(max-width: 800px) 92vw, 38vw" />
+                <Image src={assetPath("/images/jose-luis-moreno.png")} alt="José Luis Moreno Caballero, Socio Director y Fundador de MUVA Legal" fill unoptimized sizes="(max-width: 800px) 92vw, 38vw" />
                 <span className="visual-index">JLM / 01</span>
               </div>
               <div className="director-copy reveal">
-                <p className="director-role">CEO · Socio fundador</p>
+                <p className="director-role">Socio Director y Fundador · Abogado penalista</p>
                 <h2>José Luis<br /><em>Moreno Caballero</em></h2>
-                <p className="director-lead">Experiencia que convierte la complejidad en una ruta jurídica clara.</p>
+                <p className="director-lead">Dirige la estrategia de la firma en litigio penal estratégico, casación, investigaciones y asuntos jurídicos complejos.</p>
                 <div className="credential-list">
                   <div><span>Formación base</span><strong>Abogado · Universidad del Rosario</strong></div>
                   <div><span>Especialidad</span><strong>Derecho Penal · Universidad del Rosario</strong></div>
                   <div><span>Posgrado</span><strong>Magíster en Ciencias Penales y Criminológicas · Externado</strong></div>
                   <div><span>Práctica</span><strong>Litigio estratégico · Sector público y privado</strong></div>
                 </div>
-                <a className="editorial-link" href="https://www.linkedin.com/in/joseluismorenocaballero" target="_blank" rel="noreferrer" data-cursor="Abrir">
-                  Perfil profesional <span>→</span>
-                </a>
+                <p className="profile-note">Más de 14 años de experiencia como defensor, representante de víctimas, consultor jurídico, académico y conferencista.</p>
               </div>
+            </div>
+            <div className="team-intro reveal">
+              <p>Una estrategia sólida depende del equipo adecuado. MUVA Legal integra experiencia en litigio penal, casación, derecho público, derecho laboral, seguridad social, empresa, academia y análisis jurídico.</p>
+            </div>
+            <div className="team-grid">
+              {team.map((member, index) => (
+                <article className="team-card reveal" key={member.name}>
+                  <div className="team-monogram" aria-hidden="true">{member.initials}<span>{String(index + 2).padStart(2, "0")}</span></div>
+                  <p>{member.role}</p>
+                  <h3>{member.name}</h3>
+                  <strong>{member.focus}</strong>
+                  <p className="team-bio">{member.bio}</p>
+                </article>
+              ))}
+            </div>
+            <div className="allies-note reveal">
+              <strong>Capacidades aliadas</strong>
+              <p>Cuando el asunto lo requiere, articulamos profesionales y organizaciones especializadas bajo una dirección jurídica coordinada, con alcance y responsabilidad definidos para cada caso.</p>
             </div>
           </div>
         </section>
@@ -425,7 +461,7 @@ export default function Home() {
             <div className="section-rule reveal"><span>03</span><h2>Áreas de práctica</h2><i /></div>
             <div className="practices-heading reveal">
               <h2>Una defensa integral,<br /><em>etapa por etapa.</em></h2>
-              <p>Explora cada área para conocer el enfoque de acompañamiento.</p>
+              <p>Capacidades organizadas para leer el asunto completo y coordinar la respuesta adecuada.</p>
             </div>
             <div className="practice-accordion reveal">
               {practices.map((practice, index) => (
@@ -443,6 +479,7 @@ export default function Home() {
                   <h3>{practice.title}</h3>
                   <span className="panel-short">{practice.short}</span>
                   <p>{practice.text}</p>
+                  <ul className="practice-subareas">{practice.areas.map((area) => <li key={area}>{area}</li>)}</ul>
                   <i className="panel-arrow" aria-hidden="true">→</i>
                 </button>
               ))}
@@ -485,17 +522,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="insights section" id="blog">
-          <div className="container">
-            <div className="section-rule reveal"><span>06</span><h2>Análisis jurídico</h2><i /></div>
-            <div className="insights-heading reveal">
-              <h2>Comprender antes<br />de <em>decidir.</em></h2>
-              <Link className="editorial-link" href="/blog" data-cursor="Ver blog">Todos los artículos <span>→</span></Link>
-            </div>
-            <div className="article-list" aria-label="Artículos del Blog" />
-          </div>
-        </section>
-
         <section className="social section" id="redes">
           <div className="container social-layout">
             <div className="social-title reveal">
@@ -519,7 +545,7 @@ export default function Home() {
 
         <section className="contact section" id="contacto">
           <div className="container">
-            <div className="section-rule reveal"><span>07</span><h2>Contacto</h2><i /></div>
+            <div className="section-rule reveal"><span>06</span><h2>Contacto</h2><i /></div>
             <div className="contact-heading reveal">
               <h2>Todo caso comienza<br />con una <em>conversación.</em></h2>
               <div><a href="tel:+573187171958">+57 318 717 1958</a><a href="mailto:josemoreno@muvalegal.com">josemoreno@muvalegal.com</a><span>Bogotá D.C. · Colombia</span><PayPalPayment /></div>

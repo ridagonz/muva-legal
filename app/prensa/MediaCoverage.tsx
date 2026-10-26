@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import styles from "./MediaCoverage.module.css";
 
 const videos = [
@@ -59,6 +62,8 @@ const youtubeUrl = (video: (typeof videos)[number]) =>
   `https://www.youtube.com/watch?v=${video.id}${video.start ? `&t=${video.start}s` : ""}`;
 
 export default function MediaCoverage() {
+  const [activeVideo, setActiveVideo] = useState(0);
+  const video = videos[activeVideo];
   const items = [
     ...news.map(item => ({ name: item.title, url: item.url })),
     ...videos.map(item => ({ name: item.title, url: youtubeUrl(item) })),
@@ -113,28 +118,36 @@ export default function MediaCoverage() {
         <div className={styles.sectionLabel} id="videos-medios">
           <span>02 / Audiovisual</span><h3>Entrevistas y videos</h3><span>7 participaciones</span>
         </div>
-        <div className={styles.videoGrid}>
-          {videos.map((video, index) => (
-            <article className={styles.videoCard} key={video.id}>
-              <div className={styles.player}>
-                <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${video.id}?start=${video.start}&rel=0`}
-                  title={video.title}
-                  loading="lazy"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              </div>
-              <div className={styles.videoBody}>
-                <p className={styles.videoMeta}>{video.outlet}<span>{String(index + 1).padStart(2, "0")}</span></p>
-                <h4>{video.title}</h4>
-                <a className={styles.sourceLink} href={youtubeUrl(video)} target="_blank" rel="noopener noreferrer">
-                  Ver en YouTube <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </article>
-          ))}
+        <div className={styles.videoCarousel} aria-roledescription="carrusel" aria-label="Entrevistas y videos de MUVA Legal">
+          <article className={styles.videoCard}>
+            <div className={styles.player}>
+              <iframe
+                key={video.id}
+                src={`https://www.youtube-nocookie.com/embed/${video.id}?start=${video.start}&rel=0`}
+                title={video.title}
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+            <div className={styles.videoBody}>
+              <p className={styles.videoMeta}>{video.outlet}<span>{String(activeVideo + 1).padStart(2, "0")} / {String(videos.length).padStart(2, "0")}</span></p>
+              <h4>{video.title}</h4>
+              <a className={styles.sourceLink} href={youtubeUrl(video)} target="_blank" rel="noopener noreferrer">
+                Ver en YouTube <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </article>
+          <div className={styles.carouselControls}>
+            <button type="button" onClick={() => setActiveVideo((activeVideo - 1 + videos.length) % videos.length)} aria-label="Video anterior">←</button>
+            <div className={styles.carouselDots} aria-label="Seleccionar video">
+              {videos.map((item, index) => (
+                <button key={item.id} type="button" onClick={() => setActiveVideo(index)} aria-label={`Ver video ${index + 1}: ${item.title}`} aria-current={index === activeVideo ? "true" : undefined} />
+              ))}
+            </div>
+            <button type="button" onClick={() => setActiveVideo((activeVideo + 1) % videos.length)} aria-label="Video siguiente">→</button>
+          </div>
         </div>
         <p className={styles.archiveNote}>Cada nota conserva el contexto de su publicación. Los enlaces permiten consultar la cobertura completa en el medio original; las opiniones y posiciones citadas corresponden a sus respectivos autores.</p>
       </div>
