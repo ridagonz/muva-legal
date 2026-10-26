@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
+import { TeamCarousel } from "./components/TeamCarousel";
 import { PayPalPayment } from "./components/PayPalPayment";
 
 const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
@@ -47,20 +48,6 @@ const practices = [
   },
 ];
 
-const team = [
-  {
-    initials: "CMD", name: "César Fernando Mercado Durán", role: "Socio", focus: "Derecho público, constitucional, laboral y seguridad social", bio: "Abogado, Doctor y Magíster en Derecho, con experiencia jurisdiccional, académica, pública y privada. Su práctica se concentra en derecho administrativo, constitucional, laboral, seguridad social y métodos alternativos de solución de conflictos.",
-  },
-  {
-    initials: "CDU", name: "Cecilia Margarita Durán Ujueta", role: "Socia", focus: "Laboral, seguridad social y casación laboral", bio: "Abogada y exmagistrada de la Corte Suprema de Justicia, Sala de Casación Laboral. Cuenta con más de 30 años de experiencia en litigio, docencia y administración de justicia.",
-  },
-  {
-    initials: "EET", name: "Eliana Eugenio Torrado", role: "Socia", focus: "Derecho procesal civil y derecho probatorio", bio: "Abogada, especialista en Derecho Procesal Civil y Razonamiento Probatorio, con trabajo docente e investigativo en formación jurídica, prueba y proceso civil.",
-  },
-  {
-    initials: "JPP", name: "Johan David Palomino Penagos", role: "Abogado Senior", focus: "Derecho penal, disciplinario y extinción de dominio", bio: "Abogado y especialista en Derecho Penal, con experiencia en representación judicial, asesoría y asuntos que involucran altas responsabilidades públicas y privadas.",
-  },
-];
 
 const socialLinks = [
   { icon: FaXTwitter, name: "@JoseMorenoCab", href: "https://x.com/JoseMorenoCab" },
@@ -388,38 +375,8 @@ export default function Home() {
         <section className="director section" id="equipo">
           <div className="container">
             <div className="section-rule light-rule reveal"><span>02</span><h2>Equipo</h2><i /></div>
-            <div className="director-layout">
-              <div className="director-visual reveal" data-cursor="Perfil">
-                <Image src={assetPath("/images/jose-luis-moreno.webp")} alt="José Luis Moreno Caballero, Socio Director y Fundador de MUVA Legal" fill sizes="(max-width: 800px) 92vw, 38vw" />
-                <span className="visual-index">JLM / 01</span>
-              </div>
-              <div className="director-copy reveal">
-                <p className="director-role">Socio Director y Fundador · Abogado penalista</p>
-                <h2>José Luis<br /><em>Moreno Caballero</em></h2>
-                <p className="director-lead">Dirige la estrategia de la firma en litigio penal estratégico, casación, investigaciones y asuntos jurídicos complejos.</p>
-                <div className="credential-list">
-                  <div><span>Formación base</span><strong>Abogado · Universidad del Rosario</strong></div>
-                  <div><span>Especialidad</span><strong>Derecho Penal · Universidad del Rosario</strong></div>
-                  <div><span>Posgrado</span><strong>Magíster en Ciencias Penales y Criminológicas · Externado</strong></div>
-                  <div><span>Práctica</span><strong>Litigio estratégico · Sector público y privado</strong></div>
-                </div>
-                <p className="profile-note">Más de 14 años de experiencia como defensor, representante de víctimas, consultor jurídico, académico y conferencista.</p>
-              </div>
-            </div>
-            <div className="team-intro reveal">
-              <p>Una estrategia sólida depende del equipo adecuado. MUVA Legal integra experiencia en litigio penal, casación, derecho público, derecho laboral, seguridad social, empresa, academia y análisis jurídico.</p>
-            </div>
-            <div className="team-grid">
-              {team.map((member, index) => (
-                <article className="team-card reveal" key={member.name}>
-                  <div className="team-monogram" aria-hidden="true">{member.initials}<span>{String(index + 2).padStart(2, "0")}</span></div>
-                  <p>{member.role}</p>
-                  <h3>{member.name}</h3>
-                  <strong>{member.focus}</strong>
-                  <p className="team-bio">{member.bio}</p>
-                </article>
-              ))}
-            </div>
+            <p className="team-introduction">Una estrategia sólida depende del equipo adecuado. MUVA Legal integra experiencia en litigio penal, casación, derecho público, derecho laboral, seguridad social, empresa, academia y análisis jurídico, y articula capacidades complementarias cuando la naturaleza del asunto lo exige.</p>
+            <TeamCarousel />
             <div className="allies-note reveal">
               <strong>Capacidades aliadas</strong>
               <p>Cuando el asunto lo requiere, articulamos profesionales y organizaciones especializadas bajo una dirección jurídica coordinada, con alcance y responsabilidad definidos para cada caso.</p>
