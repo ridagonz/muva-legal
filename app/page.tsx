@@ -79,30 +79,23 @@ type HeroSlide = {
 const defaultHeroSlides: HeroSlide[] = [
   {
     id: "jose-luis-moreno",
-    src: "/images/jose-luis-moreno.png",
+    src: "/images/jose-luis-moreno.webp",
     alt: "José Luis Moreno Caballero, abogado penalista y socio director de MUVA Legal",
     position: "50% 12%",
   },
   {
     id: "oficina-muva",
-    src: "/images/hero-oficina-muva.png",
+    src: "/images/hero-oficina-muva.webp",
     alt: "Oficina de consulta jurídica de MUVA Legal en Bogotá",
     position: "58% center",
   },
   {
     id: "revision-caso",
-    src: "/images/hero-revision-caso.png",
+    src: "/images/hero-revision-caso.webp",
     alt: "Revisión rigurosa y confidencial de un expediente jurídico",
     position: "58% center",
   },
 ];
-
-const googleForm = {
-  action: process.env.NEXT_PUBLIC_GOOGLE_FORM_ACTION ?? "",
-  nameField: process.env.NEXT_PUBLIC_GOOGLE_FORM_NAME_FIELD ?? "entry.name",
-  emailField: process.env.NEXT_PUBLIC_GOOGLE_FORM_EMAIL_FIELD ?? "entry.email",
-  messageField: process.env.NEXT_PUBLIC_GOOGLE_FORM_MESSAGE_FIELD ?? "entry.message",
-};
 
 function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -113,58 +106,52 @@ function ContactForm() {
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    if (String(data.get("captcha") ?? "").trim() !== "12") {
-      setStatus("error");
-      setFeedback("Revisa la respuesta de seguridad antes de enviar.");
-      return;
-    }
-    if (String(data.get("website") ?? "").length > 0) return;
-
     const name = String(data.get("name") ?? "");
     const email = String(data.get("email") ?? "");
     const message = String(data.get("message") ?? "");
+    const website = String(data.get("website") ?? "");
+    const captcha = String(data.get("captcha") ?? "");
     setStatus("sending");
 
-    if (googleForm.action) {
-      const payload = new FormData();
-      payload.append(googleForm.nameField, name);
-      payload.append(googleForm.emailField, email);
-      payload.append(googleForm.messageField, message);
-      try {
-        await fetch(googleForm.action, { method: "POST", mode: "no-cors", body: payload });
-        form.reset();
-        setStatus("success");
-        setFeedback("Recibimos tu solicitud. Nuestro equipo se pondrá en contacto.");
-      } catch {
-        setStatus("error");
-        setFeedback("No fue posible enviar el mensaje. Escríbenos por correo o WhatsApp.");
-      }
-      return;
-    }
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ name, email, message, website, captcha }),
+      });
+      const result = await response.json() as { error?: string; delivery?: "form" | "mailto" };
+      if (!response.ok) throw new Error(result.error ?? "No fue posible enviar la consulta.");
 
-    const subject = encodeURIComponent(`Consulta jurídica de ${name}`);
-    const body = encodeURIComponent(`Nombre: ${name}\nCorreo: ${email}\n\nConsulta:\n${message}`);
-    window.location.href = `mailto:josemoreno@muvalegal.com?subject=${subject}&body=${body}`;
-    form.reset();
-    setStatus("success");
-    setFeedback("La consulta quedó preparada en tu aplicación de correo.");
+      if (result.delivery === "mailto") {
+        const subject = encodeURIComponent(`Consulta jurídica de ${name}`);
+        const body = encodeURIComponent(`Nombre: ${name}\nCorreo: ${email}\n\nConsulta:\n${message}`);
+        window.location.href = `mailto:josemoreno@muvalegal.com?subject=${subject}&body=${body}`;
+      }
+
+      form.reset();
+      setStatus("success");
+      setFeedback(result.delivery === "mailto" ? "La consulta quedó preparada en tu aplicación de correo." : "Recibimos tu solicitud. Nuestro equipo se pondrá en contacto.");
+    } catch (error) {
+      setStatus("error");
+      setFeedback(error instanceof Error ? error.message : "No fue posible enviar el mensaje. Escríbenos por correo o WhatsApp.");
+    }
   }
 
   return (
-    <form className="contact-form" onSubmit={handleSubmit} noValidate>
+    <form className="contact-form" onSubmit={handleSubmit}>
       <div className="field-row">
         <label>
           <span>01 / Nombre completo</span>
-          <input name="name" type="text" autoComplete="name" placeholder="Tu nombre" required />
+          <input name="name" type="text" autoComplete="name" placeholder="Tu nombre" minLength={2} maxLength={80} required />
         </label>
         <label>
           <span>02 / Correo electrónico</span>
-          <input name="email" type="email" autoComplete="email" placeholder="nombre@correo.com" required />
+          <input name="email" type="email" autoComplete="email" placeholder="nombre@correo.com" maxLength={254} required />
         </label>
       </div>
       <label>
         <span>03 / ¿Qué necesitas resolver?</span>
-        <textarea name="message" rows={4} placeholder="Describe brevemente tu situación" required />
+        <textarea name="message" rows={4} placeholder="Describe brevemente tu situación" minLength={20} maxLength={2000} required />
       </label>
       <label className="honeypot" aria-hidden="true">
         Sitio web<input name="website" type="text" tabIndex={-1} autoComplete="off" />
@@ -179,7 +166,7 @@ function ContactForm() {
         </button>
       </div>
       <p className={`form-feedback ${status}`} role="status" aria-live="polite">{feedback}</p>
-      <p className="privacy-note">Tus datos se usarán únicamente para responder esta consulta.</p>
+      <p className="privacy-note">Tus datos se usarán únicamente para responder esta consulta. <a href="/privacidad">Consulta nuestra política de privacidad.</a></p>
     </form>
   );
 }
@@ -188,27 +175,9 @@ export default function Home() {
   const [activePractice, setActivePractice] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [carouselPaused, setCarouselPaused] = useState(false);
-  const [heroSlides, setHeroSlides] = useState(defaultHeroSlides);
+  const heroSlides = defaultHeroSlides;
 
-  useEffect(() => {
-    const carouselApi = process.env.NEXT_PUBLIC_CAROUSEL_API;
-    if (process.env.NEXT_PUBLIC_BASE_PATH || !carouselApi) return;
-
-    let cancelled = false;
-    fetch(carouselApi, { cache: "no-store" })
-      .then((response) => (response.ok ? response.json() : Promise.reject()))
-      .then((data: { slides?: HeroSlide[] }) => {
-        if (!cancelled && data.slides?.length) {
-          setHeroSlides(data.slides);
-          setCurrentSlide(0);
-        }
-      })
-      .catch(() => undefined);
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const activeSlide = heroSlides[currentSlide] ?? defaultHeroSlides[0];
 
   useEffect(() => {
     if (
@@ -244,6 +213,8 @@ export default function Home() {
 
     let ticking = false;
     let lastMagnetic: HTMLElement | null = null;
+    let pointerFrame = 0;
+    let latestPointer: { x: number; y: number; target: EventTarget | null } | null = null;
 
     const updateScroll = () => {
       const y = window.scrollY;
@@ -263,13 +234,15 @@ export default function Home() {
     const finePointer = window.matchMedia("(pointer: fine)").matches;
     if (finePointer) root.classList.add("has-custom-cursor");
 
-    const onPointerMove = (event: PointerEvent) => {
-      root.style.setProperty("--cursor-x", `${event.clientX}px`);
-      root.style.setProperty("--cursor-y", `${event.clientY}px`);
-      root.style.setProperty("--hero-x", `${(event.clientX / window.innerWidth - 0.5) * 18}px`);
-      root.style.setProperty("--hero-y", `${(event.clientY / window.innerHeight - 0.5) * 14}px`);
+    const updatePointer = () => {
+      if (!latestPointer) return;
+      const { x, y, target: eventTarget } = latestPointer;
+      root.style.setProperty("--cursor-x", `${x}px`);
+      root.style.setProperty("--cursor-y", `${y}px`);
+      root.style.setProperty("--hero-x", `${(x / window.innerWidth - 0.5) * 18}px`);
+      root.style.setProperty("--hero-y", `${(y / window.innerHeight - 0.5) * 14}px`);
 
-      const target = event.target as Element | null;
+      const target = eventTarget as Element | null;
       const interactive = target?.closest("a, button, [data-cursor]");
       root.classList.toggle("cursor-active", Boolean(interactive));
       root.style.setProperty("--cursor-label", `"${interactive?.getAttribute("data-cursor") ?? ""}"`);
@@ -278,11 +251,17 @@ export default function Home() {
       if (lastMagnetic && lastMagnetic !== magnetic) lastMagnetic.style.transform = "";
       if (magnetic) {
         const rect = magnetic.getBoundingClientRect();
-        const x = (event.clientX - rect.left - rect.width / 2) * 0.13;
-        const y = (event.clientY - rect.top - rect.height / 2) * 0.13;
-        magnetic.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        const offsetX = (x - rect.left - rect.width / 2) * 0.13;
+        const offsetY = (y - rect.top - rect.height / 2) * 0.13;
+        magnetic.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
       }
       lastMagnetic = magnetic;
+      pointerFrame = 0;
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      latestPointer = { x: event.clientX, y: event.clientY, target: event.target };
+      if (!pointerFrame) pointerFrame = window.requestAnimationFrame(updatePointer);
     };
 
     const onPointerLeave = () => {
@@ -299,6 +278,7 @@ export default function Home() {
 
     return () => {
       observer.disconnect();
+      if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onPointerMove);
       document.body.removeEventListener("pointerleave", onPointerLeave);
@@ -308,32 +288,23 @@ export default function Home() {
 
   return (
     <>
-      <div className="page-intro" aria-hidden="true">
-        <div className="intro-mark">
-          <Image src={assetPath("/images/muva-logo.png")} alt="" width={450} height={250} priority unoptimized />
-        </div>
-        <p>Estrategia penal / Bogotá</p>
-      </div>
       <div className="cursor-orbit" aria-hidden="true"><span /></div>
       <div className="scroll-progress" aria-hidden="true" />
       <SiteHeader />
 
       <main>
         <section className="hero" id="inicio">
-          <div className="hero-media" aria-live="polite">
-            {heroSlides.map((slide, index) => (
-              <Image
-                className={`hero-slide ${currentSlide === index ? "active" : ""}`}
-                src={assetPath(slide.src)}
-                alt={slide.alt}
-                fill
-                priority={index === 0}
-                unoptimized
-                sizes="(max-width: 800px) 100vw, 49vw"
-                style={{ objectPosition: slide.position }}
-                key={slide.src}
-              />
-            ))}
+          <div className="hero-media" aria-live="off">
+            <Image
+              className="hero-slide active"
+              src={assetPath(activeSlide.src)}
+              alt={activeSlide.alt}
+              fill
+              priority
+              sizes="(max-width: 800px) 100vw, 49vw"
+              style={{ objectPosition: activeSlide.position }}
+              key={activeSlide.src}
+            />
             <div className="hero-media-wash" />
           </div>
           <div className="hero-coordinate hero-coordinate-a">04° 39&apos; N</div>
@@ -419,7 +390,7 @@ export default function Home() {
             <div className="section-rule light-rule reveal"><span>02</span><h2>Equipo</h2><i /></div>
             <div className="director-layout">
               <div className="director-visual reveal" data-cursor="Perfil">
-                <Image src={assetPath("/images/jose-luis-moreno.png")} alt="José Luis Moreno Caballero, Socio Director y Fundador de MUVA Legal" fill unoptimized sizes="(max-width: 800px) 92vw, 38vw" />
+                <Image src={assetPath("/images/jose-luis-moreno.webp")} alt="José Luis Moreno Caballero, Socio Director y Fundador de MUVA Legal" fill sizes="(max-width: 800px) 92vw, 38vw" />
                 <span className="visual-index">JLM / 01</span>
               </div>
               <div className="director-copy reveal">

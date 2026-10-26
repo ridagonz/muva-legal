@@ -156,7 +156,6 @@ export default function EditorialPage() {
                         alt=""
                         width={150}
                         height={84}
-                        unoptimized
                       />
                       <span>MUVA Editorial</span>
                       <i>{String(index + 1).padStart(2, "0")}</i>

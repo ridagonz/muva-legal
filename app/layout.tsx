@@ -9,12 +9,15 @@ const socialImage = isGithubPages
   : "https://muva-legal-bogota-2026.rigonz.chatgpt.site/social/muva-legal-whatsapp-v2.jpg";
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://muva-legal-bogota-2026.rigonz.chatgpt.site"),
     title: {
       default: "MUVA Legal | Abogados penalistas",
       template: "%s | MUVA Legal",
     },
     description:
       "Defensa penal estratégica, representación de víctimas y prevención jurídica con atención directa y absoluta reserva.",
+    alternates: { canonical: "/" },
+    robots: { index: true, follow: true },
     keywords: [
       "abogado penalista Bogotá",
       "defensa penal Colombia",

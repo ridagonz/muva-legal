@@ -10,11 +10,8 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_BASE_PATH: isGithubPages ? "/muva-legal" : "",
   },
-  typescript: {
-    ignoreBuildErrors: isGithubPages,
-  },
   images: {
-    unoptimized: true,
+    unoptimized: isGithubPages,
   },
 };
 

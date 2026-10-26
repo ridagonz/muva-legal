@@ -30,7 +30,7 @@ export function SiteHeader() {
     <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
       <div className="container header-inner">
         <Link className="brand" href="/" aria-label="MUVA Legal, inicio">
-          <Image src={assetPath("/images/muva-logo.png")} alt="MUVA Legal" width={180} height={100} priority unoptimized />
+          <Image src={assetPath("/images/muva-logo.png")} alt="MUVA Legal" width={180} height={100} priority />
         </Link>
         <nav className={`main-nav ${open ? "open" : ""}`} aria-label="Navegación principal">
           {nav.map((item) => (
@@ -62,7 +62,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="container footer-main">
         <div className="footer-brand">
-          <Image src={assetPath("/images/muva-logo.png")} alt="MUVA Legal" width={190} height={105} unoptimized />
+          <Image src={assetPath("/images/muva-logo.png")} alt="MUVA Legal" width={190} height={105} />
           <p>Tranquilidad y confianza mediante una práctica jurídica rigurosa y cercana.</p>
         </div>
         <div className="footer-column">
@@ -88,6 +88,7 @@ export function SiteFooter() {
           <Link href="/#areas">Áreas de práctica</Link>
           <Link href="/prensa">Prensa</Link>
           <Link href="/editorial">Editorial y publicaciones</Link>
+          <Link href="/privacidad">Privacidad</Link>
           <Link href="/#contacto">Agendar consulta</Link>
         </div>
       </div>

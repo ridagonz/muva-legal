@@ -31,9 +31,11 @@ test("server-renders the MUVA Legal home page and carousel", async () => {
   assert.match(html, /<title>MUVA Legal \| Abogados penalistas<\/title>/i);
   assert.match(html, /Estrategia/);
   assert.match(html, /Control del carrusel principal/);
-  assert.match(html, /hero-oficina-muva\.png/);
-  assert.match(html, /hero-revision-caso\.png/);
+  assert.match(html, /jose-luis-moreno\.webp/);
+  assert.match(html, /Ver imagen 3 de 3/);
   assert.match(html, /href="\/editorial"/);
+  assert.match(html, /Equipo/);
+  assert.doesNotMatch(html, /href="\/blog"/);
 });
 
 test("server-renders the editorial catalogue", async () => {
@@ -43,18 +45,21 @@ test("server-renders the editorial catalogue", async () => {
   const html = await response.text();
   assert.match(html, /<title>Editorial y publicaciones \| MUVA Legal<\/title>/i);
   assert.match(html, /Catálogo editorial/);
-  assert.match(html, /Contenido demostrativo/);
-  assert.match(html, /Pagar con/);
+  assert.match(html, /Publicaciones verificadas/);
+  assert.match(html, /Institutos especiales de la justicia especial para la paz/);
+  assert.match(html, /Continuar con/);
 });
 
-test("server-renders the blog and its published article", async () => {
-  const [blogResponse, articleResponse] = await Promise.all([
+test("server-renders press coverage and the privacy page without Blog", async () => {
+  const [pressResponse, privacyResponse, blogResponse] = await Promise.all([
+    render("/prensa"),
+    render("/privacidad"),
     render("/blog"),
-    render("/blog/bienvenidos-a-construir"),
   ]);
 
-  assert.equal(blogResponse.status, 200);
-  assert.equal(articleResponse.status, 200);
-  assert.match(await blogResponse.text(), /Comprender también es una forma de protegerse/);
-  assert.match(await articleResponse.text(), /¡Bienvenidos a construir!/);
+  assert.equal(pressResponse.status, 200);
+  assert.equal(privacyResponse.status, 200);
+  assert.equal(blogResponse.status, 404);
+  assert.match(await pressResponse.text(), /Entrevistas y videos/);
+  assert.match(await privacyResponse.text(), /Privacidad y tratamiento de datos/);
 });
