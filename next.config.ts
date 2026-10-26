@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: isGithubPages,
   },
+  typescript: {
+    tsconfigPath: isGithubPages ? "tsconfig.pages.json" : "tsconfig.json",
+  },
 };
 
 export default nextConfig;

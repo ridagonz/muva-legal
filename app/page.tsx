@@ -101,6 +101,17 @@ function ContactForm() {
     setStatus("sending");
 
     try {
+      if (process.env.NEXT_PUBLIC_BASE_PATH === "/muva-legal") {
+        if (captcha !== "12") throw new Error("Revisa la respuesta de seguridad.");
+        const subject = encodeURIComponent(`Consulta jurídica de ${name}`);
+        const body = encodeURIComponent(`Nombre: ${name}\nCorreo: ${email}\n\nConsulta:\n${message}`);
+        window.location.href = `mailto:josemoreno@muvalegal.com?subject=${subject}&body=${body}`;
+        form.reset();
+        setStatus("success");
+        setFeedback("La consulta quedó preparada en tu aplicación de correo.");
+        return;
+      }
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -153,7 +164,7 @@ function ContactForm() {
         </button>
       </div>
       <p className={`form-feedback ${status}`} role="status" aria-live="polite">{feedback}</p>
-      <p className="privacy-note">Tus datos se usarán únicamente para responder esta consulta. <a href="/privacidad">Consulta nuestra política de privacidad.</a></p>
+      <p className="privacy-note">Tus datos se usarán únicamente para responder esta consulta. <a href={assetPath("/privacidad/")}>Consulta nuestra política de privacidad.</a></p>
     </form>
   );
 }
