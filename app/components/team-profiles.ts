@@ -43,7 +43,7 @@ export const teamProfiles = [
       "Es autora del libro “El neoconstitucionalismo y la constitucionalización del Derecho del Trabajo”. Su ejercicio profesional y académico está orientado por un enfoque ético, inclusivo y equitativo."
     ],
     "image": "/images/cecilia-margarita-duran.webp",
-    "imageAspectRatio": "1 / 1"
+    "imageAspectRatio": "479 / 568"
   },
   {
     "name": "Eliana Eugenio Torrado",
@@ -57,8 +57,8 @@ export const teamProfiles = [
       "Ha desarrollado actividad docente en derecho procesal civil y derecho probatorio. Es investigadora y miembro del Foro de Jóvenes Investigadores en Derecho de la Universidad Complutense de Madrid, y ha participado como ponente en espacios académicos dedicados a la transformación de instituciones jurídicas del derecho civil colombiano.",
       "Su producción académica aborda derecho procesal y probatorio, derecho constitucional, energías renovables y construcción de paz. Es autora del libro “La carrera docente en Colombia”, de cartillas de derecho constitucional y de una propuesta de proyecto de ley sobre carrera docente especial."
     ],
-    "image": null,
-    "imageAspectRatio": "2 / 3"
+    "image": "/images/eliana-eugenio-torrado.webp",
+    "imageAspectRatio": "1 / 1"
   },
   {
     "name": "Johan David Palomino Penagos",
